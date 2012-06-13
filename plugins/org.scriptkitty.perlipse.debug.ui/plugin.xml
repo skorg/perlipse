@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+
+  <extension point="org.eclipse.dltk.debug.ui.language">
+    <language
+      class="org.scriptkitty.perlipse.internal.debug.ui.PerlDebugUILanguageTookit"
+      nature="org.scriptkitty.perlipse.core.perlipseNature" />
+  </extension>
+
+  <extension point="org.eclipse.core.runtime.adapters">
+    <factory
+      adaptableType="org.scriptkitty.perlipse.internal.ui.editor.PerlEditor"
+      class="org.scriptkitty.perlipse.internal.debug.ui.PerlEditorDebugAdapterFactory">
+      <adapter type="org.eclipse.debug.ui.actions.IToggleBreakpointsTarget" />
+      <adapter type="org.eclipse.debug.ui.actions.IRunToLineTarget" />
+    </factory>  
+  </extension>
+
+  <extension point="org.eclipse.core.runtime.preferences">
+    <initializer class="org.scriptkitty.perlipse.internal.debug.ui.PerlDebugUIPreferenceInitializer" />
+  </extension>
+
+  <extension point="org.eclipse.debug.ui.launchConfigurationTypeImages">
+    <launchConfigurationTypeImage
+      configTypeID="org.scriptkitty.perlipse.launching.PerlipseLaunchConfigurationType"
+      icon="$nl$/icons/obj16/perl_obj.png"
+      id="org.scriptkitty.perlipse.debug.ui.launchConfigurationTypeImage.localPerlScript" />
+    <launchConfigurationTypeImage
+      configTypeID="org.scriptkitty.perlipse.launching.PerlipseRemoteLaunchConfigurationType"
+      icon="$nl$/icons/obj16/perl_obj.png"
+      id="org.scriptkitty.perlipse.debug.ui.launchConfigurationTypeImage.remotePerlScript" />
+  </extension>
+
+  <extension point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+    <launchConfigurationTabGroup
+      class="org.scriptkitty.perlipse.internal.debug.ui.launchConfigurations.PerlTabGroup"
+      id="org.scriptkitty.perlipse.debug.ui.PerlipseTabGroup"
+      type="org.scriptkitty.perlipse.launching.PerlipseLaunchConfigurationType" />
+    <launchConfigurationTabGroup
+      class="org.scriptkitty.perlipse.internal.debug.ui.launchConfigurations.PerlRemoteTabGroup"
+      id="org.scriptkitty.perlipse.debug.ui.PerlipseTabGroup"
+      type="org.scriptkitty.perlipse.launching.PerlipseRemoteLaunchConfigurationType" />
+  </extension>
+
+  <extension point="org.eclipse.debug.ui.launchShortcuts">
+    <shortcut
+      class="org.scriptkitty.perlipse.internal.debug.ui.launcher.PerlLaunchShortcut"
+      icon="$nl$/icons/obj16/perl_obj.png"
+      id="org.scriptkitty.perlipse.debug.ui.launcher.PerlLaunchShortcut"
+      label="%launchShortCut.name"
+      modes="run, debug">
+      <description description="%launchShortCut.runDesc" mode="run" />
+      <description description="%launchShortCut.debugDesc" mode="run" />
+      <contextualLaunch>
+        <enablement>
+          <with variable="selection">
+            <count value="1" />
+            <iterate>
+              <or>
+                <test
+                  args="org.scriptkitty.perlipse.core.perlipseNature"
+                  property="org.eclipse.dltk.launching.hasProjectNature" />
+                <test
+                  property="org.eclipse.debug.ui.matchesPattern"
+                  value="*.pl" />
+                <test
+                  property="org.eclipse.debug.ui.matchesPattern"
+                  value="*.t" />
+              </or>
+            </iterate>
+          </with>
+        </enablement>
+      </contextualLaunch>
+    </shortcut>
+  </extension>
+
+  <extension point="org.eclipse.ui.propertyPages">
+    <page
+      class="org.scriptkitty.perlipse.internal.debug.ui.preferences.PerlDebugPreferencePage"
+      category="org.scriptkitty.perlipse.ui.propertyPage.PerlipsePropertyPage"
+      id="org.scriptkitty.perlipse.debug.ui.propertyPage.PerlDebugPreferencePage"
+      name="%debugPropertyPage.name">
+      <enabledWhen>
+        <adapt type="org.eclipse.core.resources.IProject">
+          <test
+            property="org.eclipse.core.resources.projectNature"
+            value="org.scriptkitty.perlipse.core.perlipseNature" />
+        </adapt>
+      </enabledWhen>
+    </page>
+    <page
+      class="org.scriptkitty.perlipse.internal.debug.ui.preferences.PerlDebugEnginePreferencePage"
+      category="org.scriptkitty.perlipse.debug.ui.propertyPage.PerlDebugPreferencePage"
+      id="org.scriptkitty.perlipse.debug.ui.propertyPage.debug.PerlDebugEnginePreferencePage"
+      name="%enginePropertyPage.name">
+      <enabledWhen>
+        <adapt type="org.eclipse.core.resources.IProject">
+          <test
+            property="org.eclipse.core.resources.projectNature"
+            value="org.scriptkitty.perlipse.core.perlipseNature" />
+        </adapt>
+      </enabledWhen>
+    </page>
+  </extension>
+
+  <extension point="org.eclipse.ui.preferencePages">
+    <page
+      category="org.scriptkitty.perlipse.ui.preferences.PerlipsePreferencePage"
+      class="org.scriptkitty.perlipse.internal.debug.ui.preferences.PerlInterpreterPreferencePage"
+      id="org.scriptkitty.perlipse.debug.ui.preferences.PerlInterpreterPreferencePage"
+      name="%interpreterPreferencePage.name" />
+    <page
+      category="org.scriptkitty.perlipse.debug.ui.preferences.PerlInterpreterPreferencePage"
+      class="org.scriptkitty.perlipse.internal.debug.ui.preferences.InternalInterpreterPreferencePage"
+      id="org.scriptkitty.perlipse.debug.ui.preferences.PerlEditorInterpreterPreferencePage"
+      name="%internalInterpreterPreferencePage.name" />    
+    <page
+      category="org.scriptkitty.perlipse.ui.preferences.PerlipsePreferencePage"
+      class="org.scriptkitty.perlipse.internal.debug.ui.preferences.PerlDebugPreferencePage"
+      id="org.scriptkitty.perlipse.debug.ui.preferences.PerlDebugPreferencePage"
+      name="%debugPreferencePage.name" />
+    <page
+      category="org.scriptkitty.perlipse.debug.ui.preferences.PerlDebugPreferencePage"
+      class="org.scriptkitty.perlipse.internal.debug.ui.preferences.PerlDebugEnginePreferencePage"
+      id="org.scriptkitty.perlipse.debug.ui.preferences.debug.PerlDebugEnginePreferencePage"
+      name="%enginePreferencePage.name" />
+    <page
+      category="org.scriptkitty.perlipse.debug.ui.preferences.PerlDebugPreferencePage"
+      class="org.eclipse.dltk.debug.ui.preferences.ScriptDetailFormattersPreferencePage:org.scriptkitty.perlipse.core.perlipseNature"
+      id="org.scriptkitty.perlipse.debug.ui.preferences.debug.PerlDetailFormattersPreferencePage"
+      name="%detailFormattersPreferencePage.name" />
+  </extension>
+
+  <extension point="org.eclipse.ui.popupMenus">
+    <viewerContribution
+      id="org.scriptkitty.perlipse.debug.ui.rulerContribution"
+      targetID="#PerlipseRulerContext">
+      <action
+        class="org.eclipse.debug.ui.actions.RulerEnableDisableBreakpointActionDelegate"
+        id="org.scriptkitty.perlipse.debug.ui.actions.RulerEnableDisableBreakpointActionDelegate"
+        label="%EnableDisableBreakpoint.label"
+        menubarPath="debug" />
+      <action
+        class="org.eclipse.debug.ui.actions.RulerToggleBreakpointActionDelegate"
+        id="org.scriptkitty.perlipse.debug.ui.actions.RulerToggleBreakpointActionDelegate"
+        label="%ToggleBreakpoint.label"
+        menubarPath="debug" />
+      <action
+        class="org.eclipse.dltk.debug.ui.actions.ScriptBreakpointPropertiesRulerActionDelegate"
+        id="org.scriptkitty.perlipse.debug.ui.ScriptBreakpointPropertiesRulerActionDelegate"
+        label="%BreakpointProperties.label"
+        menubarPath="group.properties" />
+    </viewerContribution>
+  </extension>
+
+  <extension point="org.eclipse.ui.editorActions">
+    <editorContribution
+      id="org.scriptkitty.perlipse.debug.ui.editor.breakpointRulerActions"
+      targetID="org.scriptkitty.perlipse.ui.editor.perlipseEditor">
+      <action
+        actionID="RulerDoubleClick"
+        class="org.eclipse.debug.ui.actions.RulerToggleBreakpointActionDelegate"
+        id="perlipseEditor.doubleClickBreakpointAction"
+        label="Toggle Breakpoint (label not used)"
+        style="push" />
+    </editorContribution>
+  </extension>
+
+  <extension point="org.eclipse.ui.actionSetPartAssociations">
+    <actionSetPartAssociation
+      targetID="org.eclipse.debug.ui.launchActionSet">
+      <part id="org.eclipse.dltk.ui.ScriptExplorer" />
+      <part id="org.scriptkitty.perlipse.ui.editor.perlipseEditor" />
+    </actionSetPartAssociation>
+  </extension>
+
+  <extension point="org.eclipse.dltk.ui.buildpathContainerPage">
+    <buildpathContainerPage
+      class="org.scriptkitty.perlipse.internal.debug.ui.interpreters.PerlInterpreterContainerWizardPage"
+      id="org.scriptkitty.perlipse.launching.INTERPRETER_CONTAINER"
+      name="Perl Interpreter Libraries"
+      nature="org.scriptkitty.perlipse.core.perlipseNature" />
+  </extension>
+
+  <extension point="org.eclipse.debug.ui.debugModelContextBindings">
+    <modelContextBinding
+      contextId="org.eclipse.dltk.debug.ui.debugging"
+      debugModelId="org.scriptkitty.perlipse.debug.perlModel" />
+  </extension>
+
+  <extension point="org.eclipse.debug.ui.debugModelPresentations">
+    <debugModelPresentation
+      class="org.scriptkitty.perlipse.internal.debug.ui.PerlDebugModelPresentation"
+      id="org.scriptkitty.perlipse.debug.perlModel" />
+  </extension>
+
+  <extension point="org.eclipse.debug.core.watchExpressionDelegates">
+    <watchExpressionDelegate
+      debugModel="org.scriptkitty.perlipse.debug.perlModel"
+      delegateClass="org.scriptkitty.perlipse.internal.debug.ui.PerlWatchExpressionDelegate" />
+  </extension>
+
+  <extension point="org.eclipse.ui.perspectiveExtensions">
+    <perspectiveExtension targetID="org.scriptkitty.perlipse.ui.PerlipsePerspective">
+      <actionSet id="org.eclipse.debug.ui.breakpointActionSet" />
+    </perspectiveExtension>
+  </extension>
+
+  <extension point="org.eclipse.ui.commands">
+    <command
+      id="org.scriptkitty.perlipse.debug.ui.commands.toggleGlobalVariables"
+      description="%showGlobalVarsCommand.name"
+      name="%showGlobalVarsCommand.description" />
+    <command
+      id="org.scriptkitty.perlipse.debug.ui.commands.toggleClassVariables"
+      description="%showClassVarsCommand.name"
+      name="%showClassVarsCommand.description" />
+    <command
+      id="org.scriptkitty.perlipse.debug.ui.commands.toggleLocalVariables"
+      description="%showLocalVarsCommand.name"
+      name="%showLocalVarsCommand.description" />
+    <command
+      id="org.scriptkitty.perlipse.debug.ui.commands.showPreferences"
+      description="%showPreferences.description"
+      name="%showPreferencesCommand.name" />      
+  </extension>
+
+  <extension point="org.eclipse.ui.menus">
+    <menuContribution locationURI="menu:org.eclipse.debug.ui.VariableView">
+      <menu
+        label="%variablesViewMenu.name"
+        id="org.scriptkitty.perlipse.debug.ui.menu.VariableView" />
+    </menuContribution>
+    <menuContribution locationURI="menu:org.scriptkitty.perlipse.debug.ui.menu.VariableView">
+      <command 
+        commandId="org.scriptkitty.perlipse.debug.ui.commands.toggleGlobalVariables" 
+        style="toggle" />
+      <command 
+        commandId="org.scriptkitty.perlipse.debug.ui.commands.toggleClassVariables" 
+        style="toggle" />       
+      <command 
+        commandId="org.scriptkitty.perlipse.debug.ui.commands.toggleLocalVariables" 
+        style="toggle" />
+      <command
+        commandId="org.scriptkitty.perlipse.debug.ui.commands.showPreferences" />              
+    </menuContribution>  
+  </extension>
+
+  <extension point="org.eclipse.ui.handlers">
+    <handler 
+      commandId="org.scriptkitty.perlipse.debug.ui.commands.toggleGlobalVariables"
+      class="org.scriptkitty.perlipse.internal.debug.ui.handlers.ToggleGlobalVariablesHandler" />
+    <handler 
+      commandId="org.scriptkitty.perlipse.debug.ui.commands.toggleClassVariables"
+      class="org.scriptkitty.perlipse.internal.debug.ui.handlers.ToggleClassVariablesHandler" />
+    <handler 
+      commandId="org.scriptkitty.perlipse.debug.ui.commands.toggleLocalVariables"
+      class="org.scriptkitty.perlipse.internal.debug.ui.handlers.ToggleLocalVariablesHandler" />    
+    <handler
+      commandId="org.scriptkitty.perlipse.debug.ui.commands.showPreferences"
+      class="org.eclipse.dltk.debug.ui.handlers.VariablesViewOptionsHandler:org.scriptkitty.perlipse.core.perlipseNature" />              
+  </extension> 
+
+<!--
+  active state's eval implementation doesn't match the dbgp spec output, so
+  these can't be turned on right now
+
+  <extension point="org.eclipse.dltk.debug.ui.scriptDetailFormatter">
+    <detailFormatter
+      nature="org.scriptkitty.perlipse.core.perlipseNature"
+      snippet="(%variable%)"
+      type="scalar" />
+    <detailFormatter
+      nature="org.scriptkitty.perlipse.core.perlipseNature"
+      snippet="\(%variable%)"
+      type="array" />
+    <detailFormatter
+      nature="org.scriptkitty.perlipse.core.perlipseNature"
+      snippet="\(%variable%)"
+      type="hash" />
+    <detailFormatter
+      nature="org.scriptkitty.perlipse.core.perlipseNature"
+      snippet="(%variable%)"
+      type="object" />
+  </extension>
+-->
+
+</plugin>

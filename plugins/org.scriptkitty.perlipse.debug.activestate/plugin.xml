@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+
+  <extension point="org.eclipse.core.runtime.preferences">
+    <initializer
+      class="org.scriptkitty.perlipse.internal.activestate.ui.preferences.PerlActiveStateDebuggerPreferenceInitializer" />
+  </extension>
+
+  <extension point="org.eclipse.ui.preferencePages">
+    <page
+      category="org.scriptkitty.perlipse.debug.ui.preferences.debug.PerlDebugEnginePreferencePage"
+      class="org.scriptkitty.perlipse.internal.activestate.ui.preferences.PerlActiveStateDebuggerPreferencePage"
+      id="org.scriptkitty.perlipse.activestate.ui.preferences.PerlActiveStateDebuggerPreferencePage"
+      name="%activeStatePropertyPage.name" />
+  </extension>
+
+  <extension point="org.eclipse.ui.propertyPages">
+    <page
+      class="org.scriptkitty.perlipse.internal.activestate.ui.preferences.PerlActiveStateDebuggerPreferencePage"
+      category="org.scriptkitty.perlipse.debug.ui.propertyPage.debug.PerlDebugEnginePreferencePage"
+      id="org.scriptkitty.perlipse.activestate.ui.preferences.PerlActiveStateDebuggerPreferencePage"
+      name="%activeStatePropertyPage.name">
+      <enabledWhen>
+        <adapt type="org.eclipse.core.resources.IProject">
+          <test
+            property="org.eclipse.core.resources.projectNature"
+            value="org.scriptkitty.perlipse.core.perlipseNature" />
+        </adapt>
+      </enabledWhen>
+    </page>
+  </extension>
+
+  <extension point="org.eclipse.dltk.launching.debuggingEngine">
+    <engineContribution natureId="org.scriptkitty.perlipse.core.perlipseNature">
+      <engine
+        class="org.scriptkitty.perlipse.internal.activestate.launching.PerlActiveStateDebuggerRunnerFactory"
+        description="%activeStateDebuggingEngine.description"
+        id="org.scriptkitty.perlipse.activestate.launching.PerlActiveStateDebuggerRunnerFactory"
+        name="%activeStateDebuggingEngine.name"
+        priority="0"
+        propertyPageId="org.scriptkitty.perlipse.activestate.ui.preferences.PerlActiveStateDebuggerPreferencePage"
+        preferencePageId="org.scriptkitty.perlipse.activestate.ui.preferences.PerlActiveStateDebuggerPreferencePage" />
+    </engineContribution>
+  </extension>
+
+</plugin>

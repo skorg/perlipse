@@ -1,0 +1,59 @@
+#
+# HEADER COMMENT
+#
+package Preview;
+
+# TODO task
+
+use strict;
+use warnings;
+
+use fields qw();
+
+=head1 NAME
+
+Preview - Syntax Hightlighting Preview
+
+=cut
+
+sub new
+{
+    my $class = shift;
+    my %args  = @_;
+    
+    my $self = fields::new($class);
+    
+    return $self;
+}
+
+=head1 METHODS
+
+=over 2
+
+=cut
+
+sub print
+{
+    my $self = shift;
+    
+    print "this is an overridden builtin\n";
+}
+
+sub heredoc
+{
+    my $self = shift;
+    
+    my $heredoc = <<ABC . "string" . <<XYZ;
+look ma!
+ABC
+stacked heredoc!
+XYZ
+}
+
+=back
+
+=cut
+
+1;
+
+__END__

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/org.scriptkitty.perlipse.feature_2.0.0.qualifier.jar" id="org.scriptkitty.perlipse.feature" version="2.0.0.qualifier">
+      <category name="org.scriptkitty.perlipse.released"/>
+   </feature>
+   <feature url="features/org.scriptkitty.perlipse.source.feature_2.0.0.qualifier.jar" id="org.scriptkitty.perlipse.source.feature" version="2.0.0.qualifier">
+      <category name="org.scriptkitty.perlipse.source"/>
+   </feature>
+   <category-def name="org.scriptkitty.perlipse.released" label="Released"/>
+   <category-def name="org.scriptkitty.perlipse.source" label="Source"/>
+</site>

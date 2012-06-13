@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.scriptkitty.perlipse.feature"
+      label="%plugin.name"
+      version="2.0.0.qualifier"
+      provider-name="%plugin.provider"
+      plugin="org.scriptkitty.perlipse">
+
+   <description url="http://scriptkitty.org/perlipse">
+      %description
+   </description>
+
+   <copyright url="http://www.eclipse.org/legal/epl-v10.html">
+      %copy
+   </copyright>
+
+   <license url="http://www.eclipse.org/legal/epl-v10.html">
+      %license
+   </license>
+
+   <url>
+      <update label="%updateSiteName" url="http://scriptkitty.org/perlipse/update-site/"/>
+      <discovery label="%discoverySiteName" url="http://scriptkitty.org/perlipse/update-site/"/>
+   </url>
+
+   <requires>
+      <import plugin="org.eclipse.core.runtime" version="3.7" match="greaterOrEqual" />
+      <import plugin="org.eclipse.core.resources" />
+      <import plugin="org.eclipse.debug.core" />
+      <import plugin="org.eclipse.dltk.core" version="4.0.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.dltk.launching" version="4.0.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.dltk.debug" version="4.0.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.dltk.validators.core" version="4.0.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.dltk.ui" version="4.0.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.dltk.debug.ui" version="4.0.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.debug.ui"/>
+      <import plugin="org.eclipse.ui.workbench.texteditor"/>
+      <import plugin="org.eclipse.ui.console"/>
+      <import plugin="org.eclipse.jface.text"/>
+      <import plugin="org.eclipse.ui.ide"/>
+      <import plugin="org.eclipse.ui.editors"/>
+      <import plugin="org.eclipse.search"/>
+   </requires>
+
+   <plugin
+         id="org.scriptkitty.perlipse.core"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.scriptkitty.perlipse"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.scriptkitty.perlipse.debug.activestate"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.scriptkitty.perlipse.debug.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.scriptkitty.perlipse.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

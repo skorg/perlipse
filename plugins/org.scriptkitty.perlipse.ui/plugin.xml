@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+
+  <extension
+    point="org.eclipse.ui.perspectives">
+    <perspective
+      class="org.scriptkitty.perlipse.ui.PerlPerspective"
+      icon="$nl$/icons/eview16/perl_persp.png"
+      id="org.scriptkitty.perlipse.ui.PerlipsePerspective"
+      name="%PerlipsePerspective.name" />
+  </extension>
+  
+  <extension
+    point="org.eclipse.ui.editors">
+    <editor
+      class="org.scriptkitty.perlipse.internal.ui.editor.PerlEditor"
+      contributorClass="org.eclipse.dltk.internal.ui.editor.SourceModuleEditorActionContributor"
+      default="true"
+      extensions="pl, pm, cgi, t"
+      icon="$nl$/icons/obj16/perl_obj.png"
+      id="org.scriptkitty.perlipse.ui.editor.perlipseEditor"
+      name="Perlipse Editor">
+      <contentTypeBinding
+        contentTypeId="org.scriptkitty.perlipse.core.perlipseContentType" />
+    </editor>
+  </extension>
+  
+  
+  <extension point="org.eclipse.ui.editorActions">
+    <editorContribution
+      targetID="org.scriptkitty.perlipse.ui.editor.perlipseEditor"
+      id="org.scriptkitty.perlipse.ui.editor.actions">
+      <action
+        label="Perlipse Editor Ruler"
+        class="org.eclipse.dltk.ui.actions.ScriptEditorRulerActionDelegate:org.scriptkitty.perlipse.core.perlipseNature"
+        actionID="RulerClick"
+        id="org.scriptkitty.perlipse.ui.editor.actions.ruler">
+      </action>
+    </editorContribution>
+  </extension>
+
+ <extension point="org.eclipse.ui.ide.markerSupport">
+   <markerTypeCategory name="Perl Problems">
+      <markerTypeReference id="org.scriptkitty.perlipse.core.perlBuild" />
+   </markerTypeCategory>
+ </extension>
+  
+  <extension
+    point="org.eclipse.ui.contexts">
+    <context
+      description="Perlipse Context"
+      id="org.scriptkitty.perlipse.ui.perlipseEditorScope"
+      name="Perlipse Context"
+      parentId="org.eclipse.dltk.ui.scriptEditorScope" />
+  </extension>
+  
+  <extension
+    id="org.scriptkitty.perlipse.ui.editor.PerlipseDocumentSetupParticipant"
+    name="Perlipse Document Setup Participant"
+    point="org.eclipse.core.filebuffers.documentSetup">
+    <participant
+      class="org.scriptkitty.perlipse.internal.ui.editor.PerlDocumentSetupParticipant" />
+  </extension>
+  
+  <extension
+    point="org.eclipse.ui.editors.templates">
+    <contextType
+      class="org.scriptkitty.perlipse.internal.ui.templates.PerlUniversalTemplateContextType"
+      id="perlUniversalTemplateContextType"
+      name="%templateContext.name">
+    </contextType>
+    <include
+      file="templates/templates.xml"
+      translations="templates/templates.properties">
+    </include>     
+  </extension>
+  
+   <extension
+     point="org.eclipse.search.searchPages">
+     <page
+       canSearchEnclosingProjects="true"
+       class="org.scriptkitty.perlipse.internal.ui.search.PerlSearchPage"
+       enabled="true"
+       extensions="pl:90,pm:90"
+       icon="$nl$/icons/obj16/search_obj.png"
+       id="org.scriptkitty.perlipse.ui.search.perlSearchpage"
+       label="%searchPage.label"
+       showScopeSection="true"
+       sizeHint="460,160">
+      </page>
+   </extension>
+  
+  <!-- XXX: be sure to update PerlUIConstants when adding new editor preference pages -->
+  
+  <extension
+    point="org.eclipse.ui.preferencePages">
+    <page
+      class="org.scriptkitty.perlipse.internal.ui.preferences.PerlGeneralPreferencePage"
+      id="org.scriptkitty.perlipse.ui.preferences.PerlipsePreferencePage"
+      name="%perlipsePreferencePage.name" />
+    <page
+      category="org.scriptkitty.perlipse.ui.preferences.PerlipsePreferencePage"
+      class="org.scriptkitty.perlipse.internal.ui.preferences.PerlCompilerPreferencePage"
+      id="org.scriptkitty.perlipse.ui.preferences.PerlipseCompilerPreferencePage"
+      name="%compilerPreferencePage.name" />              
+    <page
+      category="org.scriptkitty.perlipse.ui.preferences.PerlipsePreferencePage"
+      class="org.scriptkitty.perlipse.internal.ui.preferences.PerlEditorPreferencePage"
+      id="org.scriptkitty.perlipse.ui.preferences.PerlipseEditorPreferencePage"
+      name="%editorPreferencePage.name" />  
+    <page
+      category="org.scriptkitty.perlipse.ui.preferences.PerlipseEditorPreferencePage"
+      class="org.scriptkitty.perlipse.internal.ui.preferences.PerlEditorFoldingPreferencePage"
+      id="org.scriptkitty.perlipse.ui.preferences.PerlipseEditorFoldingPreferencePage"
+      name="%editorFoldingPreferencePage.name" />
+    <page
+      category="org.scriptkitty.perlipse.ui.preferences.PerlipseEditorPreferencePage"
+      class="org.eclipse.dltk.ui.preferences.ScriptEditorHoverPreferencePage:org.scriptkitty.perlipse.core.perlipseNature"
+      id="org.scriptkitty.perlipse.ui.preferences.PerlipseEditorHoversPreferencePage"
+      name="%editorHoversPreferencePage.name" />
+    <page
+      category="org.scriptkitty.perlipse.ui.preferences.PerlipseEditorPreferencePage"
+      class="org.scriptkitty.perlipse.internal.ui.preferences.PerlEditorSyntaxColoringPreferencePage"
+      id="org.scriptkitty.perlipse.ui.preferences.PerlipseEditorSyntaxColoringPreferencePage"
+      name="%editorSyntaxColoringPreferencePage.name" />
+    <page
+      category="org.scriptkitty.perlipse.ui.preferences.PerlipseEditorPreferencePage"
+      class="org.scriptkitty.perlipse.internal.ui.preferences.PerlCodeTemplatesPreferencePage"
+      id="org.scriptkitty.perlipse.ui.preferences.PerlCodeTemplatesPreferencePage"
+      name="%editorTemplatesPreferencePage.name" />
+    <page
+      category="org.scriptkitty.perlipse.ui.preferences.PerlipseCompilerPreferencePage"
+      class="org.scriptkitty.perlipse.internal.ui.preferences.PerlTodoTaskPreferencePage"
+      id="org.scriptkitty.perlipse.ui.preferences.PerlTodoTaskPreferencePage"
+      name="%taskTagsPreferencePage.name" />
+    <page
+      category="org.scriptkitty.perlipse.ui.preferences.PerlipsePreferencePage"
+      class="org.scriptkitty.perlipse.internal.ui.preferences.PerlParserPreferencePage"
+      id="org.scriptkitty.perlipse.ui.preferences.PerlipseParserPreferencePage"
+      name="%parsersPreferencePage.name" />      
+  </extension>
+  
+  <extension
+    point="org.eclipse.ui.propertyPages">
+    <page
+      name="%perlipsePropertyPage.name"
+      class="org.scriptkitty.perlipse.internal.ui.preferences.PerlPropertyPage"
+      id="org.scriptkitty.perlipse.ui.propertyPage.PerlipsePropertyPage">
+      <enabledWhen>
+        <adapt
+          type="org.eclipse.core.resources.IProject">
+          <test
+            property="org.eclipse.core.resources.projectNature"
+            value="org.scriptkitty.perlipse.core.perlipseNature" />
+        </adapt>
+      </enabledWhen>
+    </page>
+    <page
+      category="org.scriptkitty.perlipse.ui.propertyPage.PerlipsePropertyPage"
+      class="org.scriptkitty.perlipse.internal.ui.preferences.PerlBuildPathPropertyPage"
+      id="org.scriptkitty.perlipse.ui.buildPathProperties"
+      name="%buildPathPropertyPage.name">
+      <enabledWhen>
+        <adapt
+          type="org.eclipse.core.resources.IProject">
+          <test
+            property="org.eclipse.core.resources.projectNature"
+            value="org.scriptkitty.perlipse.core.perlipseNature" />
+        </adapt>
+      </enabledWhen>      
+    </page>   
+    <page
+      category="org.scriptkitty.perlipse.ui.propertyPage.PerlipsePropertyPage"
+      class="org.scriptkitty.perlipse.internal.ui.preferences.PerlCompilerPreferencePage"
+      id="org.scriptkitty.perlipse.ui.propertyPage.PerlCompilerPreferencePage"
+      name="%compilerPropertyPage.name">
+      <enabledWhen>
+        <adapt
+          type="org.eclipse.core.resources.IProject">
+          <test
+            property="org.eclipse.core.resources.projectNature"
+            value="org.scriptkitty.perlipse.core.perlipseNature" />
+        </adapt>
+      </enabledWhen>     
+    </page>   
+    <page
+      category="org.scriptkitty.perlipse.ui.propertyPage.PerlipsePropertyPage"
+      class="org.scriptkitty.perlipse.internal.ui.preferences.PerlTodoTaskPreferencePage"
+      id="org.scriptkitty.perlipse.ui.propertyPage.PerlTodoTaskPreferencePage"
+      name="%taskTagsPropertyPage.name">
+      <enabledWhen>
+        <adapt
+          type="org.eclipse.core.resources.IProject">
+          <test
+            property="org.eclipse.core.resources.projectNature"
+            value="org.scriptkitty.perlipse.core.perlipseNature" />
+        </adapt>
+      </enabledWhen>     
+    </page>   
+  </extension>
+  
+  <extension
+    point="org.eclipse.ui.decorators">
+    <decorator
+      adaptable="true"
+      location="TOP_LEFT"
+      lightweight="true"
+      label="%PerlipseProjectDecorator.name"
+      state="true"
+      class="org.eclipse.dltk.ui.DeclarativeLightweightLabelDecorator:/icons/ovr16/perl_ovr.png"
+      id="org.scriptkitty.perlipse.ui.projectDecorator">
+      <enablement>
+        <and>
+          <objectClass
+            name="org.eclipse.core.resources.IProject" />
+          <objectState
+            name="nature" 
+            value="org.scriptkitty.perlipse.core.perlipseNature" />
+        </and>
+      </enablement>
+    </decorator>
+  </extension>
+  
+  <extension
+    point="org.eclipse.ui.newWizards">
+    <category
+      id="org.scriptkitty.perlipse.ui"
+      name="Perlipse" />
+    <wizard
+      category="org.scriptkitty.perlipse.ui"
+      class="org.scriptkitty.perlipse.internal.ui.wizards.PerlProjectWizard"
+      finalPerspective="org.scriptkitty.perlipse.ui.PerlipsePerspective"
+      icon="$nl$/icons/etools/newprj_wiz.png"
+      id="org.scriptkitty.perlipse.ui.wizards.PerlipseProjectWizard"
+      name="%NewPerlipseProjectWizard.label"
+      preferredPerspectives="org.scriptkitty.perlipse.ui.PerlipsePerspective"
+      project="true">
+      <description>%NewPerlipseProjectWizard.description</description>
+    </wizard>
+    <wizard
+      category="org.scriptkitty.perlipse.ui"
+      class="org.eclipse.dltk.ui.wizards.NewSourceFolderCreationWizard"
+      icon="$nl$/icons/etools/newpackfolder_wiz.gif"
+      id="org.scriptkitty.perlipse.ui.wizards.NewSourceFolderCreationWizard"
+      name="%NewSourceFolderCreationWizard.label">
+      <description>%NewSourceFolderCreationWizard.description</description>
+    </wizard>
+    <wizard
+      category="org.scriptkitty.perlipse.ui"
+      class="org.scriptkitty.perlipse.internal.ui.wizards.PerlPackageWizard"
+      icon="$nl$/icons/etools/newpack_wiz.gif"
+      id="org.scriptkitty.perlipse.ui.wizards.NewPerlPackageCreationWizard"
+      name="%NewPerlPackage.label">
+      <description>%NewPerlPackage.description</description>
+    </wizard>
+  </extension>
+  
+  <extension
+    point="org.eclipse.core.runtime.preferences">
+    <initializer
+      class="org.scriptkitty.perlipse.internal.ui.PerlUIPreferenceInitializer" />
+  </extension>
+  
+  <extension
+    point="org.eclipse.ui.actionSetPartAssociations">
+    <actionSetPartAssociation
+      targetID="org.eclipse.ui.edit.text.actionSet.presentation">
+      <part
+        id="org.scriptkitty.perlipse.ui.editor.perlipseEditor" />
+    </actionSetPartAssociation>
+    <!--
+      <actionSetPartAssociation
+      targetID="org.eclipse.dltk.ui.ScriptCodingActionSet">
+      <part id="org.scriptkitty.perlipse.ui.editor.perlipseEditor" />
+      </actionSetPartAssociation>
+    -->
+    <actionSetPartAssociation
+      targetID="org.eclipse.ui.examples.contributions.globalActionSet">
+      <part
+        id="org.scriptkitty.perlipse.ui.editor.perlipseEditor" />
+    </actionSetPartAssociation>
+  </extension>
+  
+  <extension
+    point="org.eclipse.dltk.ui.language">
+    <language
+      class="org.scriptkitty.perlipse.internal.ui.PerlUILanguageToolkit"
+      nature="org.scriptkitty.perlipse.core.perlipseNature" />
+  </extension>
+  
+  <extension
+    point="org.eclipse.dltk.ui.scriptCompletionProposalComputer"
+    id="org.scriptkitty.perlipse.ui.text.completion.perlTypeCompletionProposalComputer">
+    <scriptCompletionProposalComputer
+      class="org.scriptkitty.perlipse.internal.ui.text.completion.PerlTypeCompletionProposalComputer"
+      categoryId="org.eclipse.dltk.ui.scriptTypeProposalCategory"
+      toolkitId="org.scriptkitty.perlipse.core.perlipseNature">
+      <partition
+        type="__dftl_partition_content_type" />
+    </scriptCompletionProposalComputer>
+  </extension>
+
+<!--
+  <extension point="org.eclipse.ui.ide.markerResolution">
+    <markerResolutionGenerator
+      class="org.perlipse.internal.validators.ui.compiler.PerlCompilerMarkerResolutionGenerator"
+      markerType="org.perlipse.validators.perlCompilerMarker" />
+  </extension>
+
+  <extension point="org.eclipse.dltk.ui.correctionProcessor">
+    <correctionProcessor
+      class="org.perlipse.internal.validators.ui.compiler.PerlCompilerCorrectionProcessor"
+      nature="org.scriptkitty.perlipse.core.perlipseNature" />
+  </extension>
+
+-->
+
+<!--
+  <extension
+    point="org.eclipse.dltk.ui.scriptDocumentationProviders">
+    <provider
+      class="org.scriptkitty.perlipse.internal.ui.documentation.PerlInlineDocumentationProvider"
+      id="org.scriptkitty.perlipse.ui.PerlDocumentationProvider"
+      nature="org.scriptkitty.perlipse.core.perlipseNature"/>
+  </extension>
+-->  
+  <extension
+    point="org.eclipse.ui.actionSets">
+    <actionSet
+      id="org.eclipse.ui.examples.contributions.globalActionSet"
+      label="Test Action Set"
+      visible="false">
+    </actionSet>
+  </extension>
+  
+  <extension
+    point="org.eclipse.core.expressions.definitions">
+    <definition
+      id="org.eclipse.ui.examples.contributions.inGlobalActionSet">
+      <with
+        variable="activeContexts">
+        <iterate
+          operator="or">
+          <equals
+            value="org.eclipse.ui.examples.contributions.globalActionSet">
+          </equals>
+        </iterate>
+      </with>
+    </definition>
+  </extension>
+
+<!--
+  <extension point="org.eclipse.ui.menus">
+    <menuContribution locationURI="menu:org.eclipse.ui.main.menu?after=edit">
+      <menu
+        label="Source"
+        mnemonic="S"
+        id="org.eclipse.ui.examples.contributions.menus.globalMenu">
+
+        <command
+          label="hello"
+          commandId="org.eclipse.ui.examples.contributions.commands.globalCommand"
+          mnemonic="R"
+          id="org.eclipse.ui.examples.contributions.menus.globalCommand">
+          <visibleWhen>
+            <reference
+              definitionId="org.eclipse.ui.examples.contributions.inGlobalActionSet">
+            </reference>
+          </visibleWhen>
+        </command>
+      </menu>
+    </menuContribution>
+  </extension>
+-->
+</plugin>

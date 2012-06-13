@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+
+  <extension point="org.eclipse.core.contenttype.contentTypes">
+    <content-type
+      base-type="org.eclipse.core.runtime.text"
+      file-extensions="pl, pm, cgi, t"
+      id="org.scriptkitty.perlipse.core.perlipseContentType"
+      name="%perlContentType.name"
+      priority="high">
+      <describer
+        class="org.scriptkitty.perlipse.internal.core.PerlContentDescriber"
+        plugin="org.scriptkitty.perlipse.core">
+      </describer>
+    </content-type>
+  </extension>
+
+  <extension point="org.eclipse.core.resources.markers"
+    id="perlBuild"
+    name="%buildMarker.name">
+    <persistent value="true" />
+    <!--attribute name="dependencies" /-->
+    <super type="org.eclipse.dltk.core.problem"/>
+  </extension>
+  
+  <extension point="org.eclipse.core.resources.markers"
+    id="perlTask"
+    name="%taskMarker.name">
+    <persistent value="true" />
+    <super type="org.eclipse.dltk.core.task"/>
+  </extension>
+
+  <extension point="org.eclipse.core.resources.natures"
+    id="perlipseNature"
+    name="%projectNature.name">    
+    <runtime>
+      <run
+        class="org.scriptkitty.perlipse.core.PerlNature" />
+    </runtime>
+  </extension>
+
+  <extension point="org.eclipse.core.runtime.preferences">
+    <initializer
+      class="org.scriptkitty.perlipse.internal.core.PerlCorePreferenceInitializer" />
+  </extension>
+
+  <extension point="org.eclipse.dltk.core.buildParticipant">
+    <buildParticipant
+      class="org.eclipse.dltk.core.builder.ParserBuildParticipantFactory"
+      id="org.scriptkitty.perlipse.core.parserBuildParticipant"
+      name="%parserBuildParticipant" 
+      nature="org.scriptkitty.perlipse.core.perlipseNature" />
+    <buildParticipant
+      class="org.scriptkitty.perlipse.internal.parser.PerlTaskBuildParticipantFactory"
+      id="org.scriptkitty.perlipse.core.todo"
+      name="%taskTagBuildParticipant"
+      nature="org.scriptkitty.perlipse.core.perlipseNature">
+      <requires id="org.scriptkitty.perlipse.core.parserBuildParticipant" />
+    </buildParticipant>
+    <buildParticipant
+      class="org.scriptkitty.perlipse.internal.builder.PerlBuildParticipantFactory"
+      id="org.scriptkitty.perlipse.core.builder"
+      name="%compilerBuildParticipant"
+      nature="org.scriptkitty.perlipse.core.perlipseNature">
+    </buildParticipant>    
+  </extension>
+
+  <extension point="org.eclipse.dltk.core.language">
+    <language
+      class="org.scriptkitty.perlipse.core.PerlLanguageToolkit"
+      nature="org.scriptkitty.perlipse.core.perlipseNature" />
+  </extension>
+
+  <extension point="org.eclipse.dltk.core.problemFactory">
+    <problemFactory
+      class="org.scriptkitty.perlipse.internal.core.PerlProblemFactory"
+      nature="org.scriptkitty.perlipse.core.perlipseNature" />
+<!--          
+          <problemIdentifierFactory
+             class="org.eclipse.dltk.javascript.core.JavaScriptProblemFactory"
+             namespace="org.eclipse.dltk.javascript.core.JavaScriptProblems">
+          </problemIdentifierFactory>
+          <problemCategory
+            scope="@SuppressWarnings"
+            id="unused"
+            nature="org.eclipse.dltk.javascript.core.nature">
+            <problem>org.eclipse.dltk.javascript.core.JavaScriptProblems#UNUSED_VARIABLE</problem>
+          </problemCategory>
+-->          
+    </extension>
+
+  <extension point="org.eclipse.dltk.core.sourceElementParsers">
+    <parser
+      class="org.scriptkitty.perlipse.internal.parser.PerlSourceElementParser"
+      nature="org.scriptkitty.perlipse.core.perlipseNature"
+      priority="0">
+    </parser>
+  </extension>
+
+  <extension point="org.eclipse.dltk.core.sourceParsers">
+    <parserContribution
+      natureId="org.scriptkitty.perlipse.core.perlipseNature">
+      <parser
+        class="org.scriptkitty.perlipse.internal.parser.NullSourceParserFactory"
+        description="%nullSourceParser.name"
+        id="org.scriptkitty.perlipse.core.parser.nullSourceParser"
+        name="%nullSourceParser.description"
+        priority="0" />
+      <parser
+        class="org.scriptkitty.perlipse.internal.parser.ppi4j.PerlSourceParserFactory"
+        description="%ppi4jSourceParser.description"
+        id="org.scriptkitty.perlipse.parser.ppi4j.sourceParser"
+        name="%ppi4jSourceParser.name"
+        priority="1" />
+      <selector
+        class="org.scriptkitty.perlipse.internal.parser.PerlSourceParserSelector" />
+    </parserContribution>
+  </extension>
+  
+<!--
+  <extension
+    point="org.eclipse.dltk.core.search">
+    <seachFactory
+      class="org.scriptkitty.perlipse.internal.core.search.PerlSearchFactory"
+      nature="org.scriptkitty.perlipse.core.perlipseNature"
+      priority="0">
+    </seachFactory>
+  </extension>
+-->
+<!--
+  <extension
+    point="org.eclipse.dltk.core.completionEngine">
+    <completionEngine
+      class="org.scriptkitty.perlipse.internal.core.codeassist.PerlCompletionEngine"
+      nature="org.scriptkitty.perlipse.core.perlipseNature"
+      priority="0" />
+  </extension>
+
+  <extension
+    point="org.eclipse.dltk.core.selectionEngine">
+    <selectionEngine
+      class="org.scriptkitty.perlipse.internal.core.codeassist.PerlSelectionEngine"
+      nature="org.scriptkitty.perlipse.core.perlipseNature"
+      priority="0" />
+  </extension>
+-->
+
+  <!-- pull this up?
+    <extension point="org.eclipse.debug.core.sourceContainerTypes">
+    <sourceContainerType
+    id="org.eclipse.dltk.launching.sourceContainer.scriptProject"
+    name="Perlipse Project Source Container"
+    description="Perlipse Project Source Container"
+    class="org.eclipse.dltk.launching.sourcelookup.containers.ScriptProjectSourceContainerTypeDelegate" />
+    </extension>
+  -->
+
+  <extension point="org.eclipse.dltk.launching.debuggingEngine">
+    <engineContribution natureId="org.scriptkitty.perlipse.core.perlipseNature">
+      <selector
+        class="org.scriptkitty.perlipse.internal.launching.PerlDebuggingEngineSelector" />
+    </engineContribution>
+  </extension>
+
+  <extension point="org.eclipse.dltk.launching.interpreterInstallTypes">
+    <interpreterInstallType
+      class="org.scriptkitty.perlipse.internal.launching.GenericPerlInstallType"
+      id="org.scriptkitty.perlipse.internal.debug.ui.launcher.GenericPerlInstallType" />
+  </extension>
+
+  <extension point="org.eclipse.debug.core.launchConfigurationTypes">
+    <launchConfigurationType
+      delegate="org.scriptkitty.perlipse.launching.PerlLaunchConfigurationDelegate"
+      id="org.scriptkitty.perlipse.launching.PerlipseLaunchConfigurationType"
+      modes="run,debug"
+      name="%scriptLaunchConfig.name"
+      public="true"
+      sourceLocatorId="perlSourceLocator"
+      sourcePathComputerId="perlSourcePathComputer" />
+    <launchConfigurationType
+      delegate="org.scriptkitty.perlipse.launching.PerlRemoteLaunchConfigurationDelegate"
+      id="org.scriptkitty.perlipse.launching.PerlipseRemoteLaunchConfigurationType"
+      modes="debug"
+      name="%remoteLaunchConfig.name"
+      public="true"
+      sourceLocatorId="perlRemoteSourceLocator"
+      sourcePathComputerId="perlSourcePathComputer" />
+  </extension>
+
+  <extension point="org.eclipse.debug.core.sourceLocators">
+    <sourceLocator
+      class="org.eclipse.dltk.launching.sourcelookup.ScriptSourceLookupDirector"
+      id="perlSourceLocator"
+      name="org.scriptkitty.perlipse.launching.perlipseSourceLocator" />
+    <sourceLocator
+      class="org.eclipse.dltk.launching.sourcelookup.RemoteScriptSourceLookupDirector"
+      id="perlRemoteSourceLocator"
+      name="org.scriptkitty.perlipse.launching.perlipseRemoteSourceLocator" />
+  </extension>
+
+  <extension point="org.eclipse.debug.core.sourcePathComputers">
+    <sourcePathComputer
+      class="org.eclipse.dltk.launching.sourcelookup.ScriptSourcePathComputer"
+      id="perlSourcePathComputer" />
+  </extension>
+
+  <extension point="org.eclipse.dltk.debug.scriptDebugModel">
+    <debugModel
+      debugModelId="org.scriptkitty.perlipse.debug.perlModel"
+      natureId="org.scriptkitty.perlipse.core.perlipseNature"
+      typeFactory="org.scriptkitty.perlipse.internal.debug.PerlTypeFactory" />
+  </extension>
+
+</plugin>
