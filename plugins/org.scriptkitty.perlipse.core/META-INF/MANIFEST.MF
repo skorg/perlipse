@@ -21,7 +21,14 @@ Export-Package: org.scriptkitty.perlipse.ast,
  org.scriptkitty.perlipse.core.util,
  org.scriptkitty.perlipse.core.util.syntax,
  org.scriptkitty.perlipse.debug,
+ org.scriptkitty.perlipse.internal.builder;x-internal:=true,
+ org.scriptkitty.perlipse.internal.core;x-internal:=true,
+ org.scriptkitty.perlipse.internal.core.codeassist;x-internal:=true,
+ org.scriptkitty.perlipse.internal.core.search;x-internal:=true,
+ org.scriptkitty.perlipse.internal.debug;x-internal:=true,
+ org.scriptkitty.perlipse.internal.launching;x-internal:=true,
+ org.scriptkitty.perlipse.internal.parser;x-internal:=true,
+ org.scriptkitty.perlipse.internal.parser.ppi4j;x-internal:=true,
  org.scriptkitty.perlipse.launching
 Bundle-Vendor: %plugin.provider
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Bundle-ClassPath: .

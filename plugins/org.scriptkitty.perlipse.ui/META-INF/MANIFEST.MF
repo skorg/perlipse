@@ -19,12 +19,17 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.search,
  org.scriptkitty.perl-utils;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
-Export-Package: org.scriptkitty.perlipse.internal.ui,
- org.scriptkitty.perlipse.internal.ui.editor,
- org.scriptkitty.perlipse.internal.ui.preferences,
- org.scriptkitty.perlipse.internal.ui.text,
- org.scriptkitty.perlipse.internal.ui.text.rules,
- org.scriptkitty.perlipse.internal.ui.wizards,
+Export-Package: org.scriptkitty.perlipse.internal.ui;x-internal:=true,
+ org.scriptkitty.perlipse.internal.ui.documentation;x-internal:=true,
+ org.scriptkitty.perlipse.internal.ui.editor;x-internal:=true,
+ org.scriptkitty.perlipse.internal.ui.preferences;x-internal:=true,
+ org.scriptkitty.perlipse.internal.ui.search;x-internal:=true,
+ org.scriptkitty.perlipse.internal.ui.templates;x-internal:=true,
+ org.scriptkitty.perlipse.internal.ui.text;x-internal:=true,
+ org.scriptkitty.perlipse.internal.ui.text.completion;x-internal:=true,
+ org.scriptkitty.perlipse.internal.ui.text.correction;x-internal:=true,
+ org.scriptkitty.perlipse.internal.ui.text.rules;x-internal:=true,
+ org.scriptkitty.perlipse.internal.ui.wizards;x-internal:=true,
  org.scriptkitty.perlipse.ui
 Bundle-Vendor: %plugin.provider
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
