@@ -28,13 +28,36 @@
 
   <profiles>
     <profile>
-      <id>dist</id>
+      <id>dist-plugin</id>
       <modules>
         <module>../features/org.scriptkitty.perlipse.feature</module>
         <module>../features/org.scriptkitty.perlipse.source.feature</module>
         <module>../plugins/org.scriptkitty.perlipse</module>
         <module>../update.site</module>
       </modules>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-jarsigner-plugin</artifactId>
+            <version>1.2</version>
+            <executions>
+              <execution>
+                <id>sign</id>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+              <execution>
+                <id>verify</id>
+                <goals>
+                  <goal>verify</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
     </profile>
   </profiles>
 
@@ -61,7 +84,7 @@
       <groupId>org.scriptkitty</groupId>
       <artifactId>ppi4j-ast</artifactId>
       <version>1.2.0-SNAPSHOT</version>
-    </dependency>    
+    </dependency>
   </dependencies>
 
   <build>
@@ -76,6 +99,15 @@
         <groupId>org.eclipse.tycho</groupId>
         <artifactId>tycho-source-plugin</artifactId>
         <version>${tycho-version}</version>
+        <configuration>
+          <archive>
+            <addMavenDescriptor>false</addMavenDescriptor>
+            <manifestEntries>
+              <Built-By>${jar.packaged.by}</Built-By>
+            </manifestEntries>
+          </archive>
+          <includePom>true</includePom>
+        </configuration>
         <executions>
           <execution>
             <id>plugin-source</id>
@@ -84,6 +116,19 @@
             </goals>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>tycho-packaging-plugin</artifactId>
+        <version>${tycho-version}</version>
+        <configuration>
+          <archive>
+            <addMavenDescriptor>false</addMavenDescriptor>
+            <manifestEntries>
+              <Built-By>${jar.packaged.by}</Built-By>
+            </manifestEntries>
+          </archive>
+        </configuration>
       </plugin>
       <plugin>
         <groupId>org.eclipse.tycho</groupId>
