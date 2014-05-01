@@ -20,20 +20,19 @@
   </properties>
 
   <modules>
-    <module>../plugins/org.scriptkitty.perlipse.core</module>
-    <module>../plugins/org.scriptkitty.perlipse.ui</module>
-    <module>../plugins/org.scriptkitty.perlipse.debug.ui</module>
-    <module>../plugins/org.scriptkitty.perlipse.debug.activestate</module>
+    <module>plugins/org.scriptkitty.perlipse.core</module>
+    <module>plugins/org.scriptkitty.perlipse.ui</module>
+    <module>plugins/org.scriptkitty.perlipse.debug.ui</module>
+    <module>plugins/org.scriptkitty.perlipse.debug.activestate</module>
   </modules>
 
   <profiles>
     <profile>
       <id>dist-plugin</id>
       <modules>
-        <module>../plugins/org.scriptkitty.perlipse</module> 
-        <module>../features/org.scriptkitty.perlipse.feature</module>
-        <module>../features/org.scriptkitty.perlipse.deps.feature</module>
-        <module>../update.site</module>
+        <module>plugins/org.scriptkitty.perlipse</module> 
+        <module>features/org.scriptkitty.perlipse.feature</module>
+        <module>update.site</module>
       </modules>
 <!-- 
       <build>
