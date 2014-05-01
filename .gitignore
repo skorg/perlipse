@@ -1,3 +1,7 @@
+.classpath
+.DS_Store
+.project
+.settings
 bin
+logs
 target
-site
