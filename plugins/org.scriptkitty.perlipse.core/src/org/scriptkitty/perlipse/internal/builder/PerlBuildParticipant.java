@@ -1,7 +1,6 @@
 package org.scriptkitty.perlipse.internal.builder;
 
 import org.eclipse.core.runtime.CoreException;
-
 import org.eclipse.dltk.compiler.problem.IProblemReporter;
 import org.eclipse.dltk.compiler.problem.ProblemSeverity;
 import org.eclipse.dltk.core.ISourceRange;
@@ -10,32 +9,21 @@ import org.eclipse.dltk.core.builder.IBuildParticipant;
 import org.eclipse.dltk.core.builder.ISourceLineTracker;
 import org.eclipse.dltk.launching.IScriptProcessHandler.ScriptResult;
 import org.eclipse.dltk.launching.InternalScriptExecutor;
-
-import org.scriptkitty.perl.compiler.CompilerOutput;
-import org.scriptkitty.perl.compiler.CompilerOutputParser;
-import org.scriptkitty.perl.compiler.ErrorsAndWarnings;
+import org.eclipse.dltk.utils.TextUtils;
+import org.scriptkitty.perl.errorwarn.CompilerErrorOrWarn;
+import org.scriptkitty.perl.errorwarn.CompilerOutput;
 
 
 public class PerlBuildParticipant implements IBuildParticipant
 {
-    //~ Instance fields
-
     private InternalScriptExecutor executor;
     private String incPath;
-
-    private CompilerOutputParser parser;
-
-    //~ Constructors
 
     PerlBuildParticipant(String incPath, InternalScriptExecutor executor)
     {
         this.incPath = incPath;
         this.executor = executor;
-
-        this.parser = new CompilerOutputParser();
     }
-
-    //~ Methods
 
     @Override public void build(IBuildContext context) throws CoreException
     {
@@ -47,27 +35,20 @@ public class PerlBuildParticipant implements IBuildParticipant
 
         ScriptResult result = executor.execute(args, context.getContentsAsCharArray());
 
-        for (CompilerOutput output : parser.parse(result.stderrLines))
+        for (CompilerOutput output : CompilerOutput.parse(result.stderrLines))
         {
             if (!output.isLocal() || output.isCompilationAborted())
             {
                 continue;
             }
 
-            ErrorsAndWarnings.ErrorOrWarning eom = output.getErrorOrWarning();
+            CompilerErrorOrWarn eow = output.getErrorOrWarning();
 
-            ProblemSeverity severity = getSeverity(eom);
+            int lineNumber = output.getLineNumber() - 1;
+            ProblemSeverity severity = (eow.isWarning()) ? ProblemSeverity.WARNING : ProblemSeverity.ERROR;
 
-            /*
-             * TODO: replace when avaialble in dtlk-core
-             */
-            // ISourceRange range = TextUtils.trimWhitespace(context.getSourceContents(),
-            // tracker.getLineInformation(output.lineNo - 1));
-
-            ISourceRange range = trimWhitespace(context.getSourceContents(),
-                tracker.getLineInformation(output.lineNo - 1));
-
-            PerlBuildProblem problem = new PerlBuildProblem(output.message, severity, range, output.lineNo - 1);
+            ISourceRange range = TextUtils.trimWhitespace(context.getSourceContents(), tracker.getLineInformation(lineNumber));
+            PerlBuildProblem problem = new PerlBuildProblem(output.getMessage(), severity, range, lineNumber);
 
             reporter.reportProblem(problem);
         }
@@ -112,10 +93,4 @@ public class PerlBuildParticipant implements IBuildParticipant
             }
         };
     }
-
-    private ProblemSeverity getSeverity(ErrorsAndWarnings.ErrorOrWarning eom)
-    {
-        return (eom.isWarning()) ? ProblemSeverity.WARNING : ProblemSeverity.ERROR;
-    }
-
 }

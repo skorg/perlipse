@@ -4,8 +4,6 @@ public final class PerlCoreConstants
 {
 	public static String PLUGIN_ID = "org.scriptkitty.perlipse.core";
 
-	public static String TODO_ID = "org.scriptkitty.perlipse.core.todo";
-	
     public static String EDITOR_ID = "org.scriptkitty.perlipse.ui.editor.perlipseEditor";
 
     public static String EDITOR_CONTEXT = "#PerlipseEditorContext";

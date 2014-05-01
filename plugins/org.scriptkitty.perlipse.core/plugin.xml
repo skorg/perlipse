@@ -17,7 +17,7 @@
   </extension>
 
   <extension point="org.eclipse.core.resources.markers"
-    id="perlBuild"
+    id="org.scriptkitty.perlipse.core.perlBuild"
     name="%buildMarker.name">
     <persistent value="true" />
     <!--attribute name="dependencies" /-->
@@ -25,7 +25,7 @@
   </extension>
   
   <extension point="org.eclipse.core.resources.markers"
-    id="perlTask"
+    id="org.scriptkitty.perlipse.core.perlTask"
     name="%taskMarker.name">
     <persistent value="true" />
     <super type="org.eclipse.dltk.core.task"/>
@@ -76,19 +76,11 @@
     <problemFactory
       class="org.scriptkitty.perlipse.internal.core.PerlProblemFactory"
       nature="org.scriptkitty.perlipse.core.perlipseNature" />
-<!--          
-          <problemIdentifierFactory
-             class="org.eclipse.dltk.javascript.core.JavaScriptProblemFactory"
-             namespace="org.eclipse.dltk.javascript.core.JavaScriptProblems">
-          </problemIdentifierFactory>
-          <problemCategory
-            scope="@SuppressWarnings"
-            id="unused"
-            nature="org.eclipse.dltk.javascript.core.nature">
-            <problem>org.eclipse.dltk.javascript.core.JavaScriptProblems#UNUSED_VARIABLE</problem>
-          </problemCategory>
--->          
-    </extension>
+      <problemIdentifierFactory
+        class="org.scriptkitty.perlipse.internal.core.PerlProblemIdentityFactory"
+        namespace="org.scriptkitty.perlipse.internal.builder.PerlBuildProblem">
+      </problemIdentifierFactory>
+  </extension>
 
   <extension point="org.eclipse.dltk.core.sourceElementParsers">
     <parser

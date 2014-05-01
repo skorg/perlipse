@@ -15,13 +15,9 @@ import org.scriptkitty.perlipse.core.PerlCoreConstants;
 
 public class PerlProblemFactory extends DefaultProblemFactory
 {
-    //~ Static fields/initializers
+    static final String PROBLEM = PerlCoreConstants.PLUGIN_ID + ".perlBuild";
 
-    private static final String PROBLEM = PerlCoreConstants.PLUGIN_ID + ".perlBuild";
-
-    private static final String TASK = PerlCoreConstants.PLUGIN_ID + ".perlTask";
-
-    //~ Methods
+    static final String TASK = PerlCoreConstants.PLUGIN_ID + ".perlTask";
 
     /*
      * @see org.eclipse.dltk.compiler.problem.DefaultProblemFactory#createMarker(org.eclipse .core.resources.IResource,
@@ -61,5 +57,4 @@ public class PerlProblemFactory extends DefaultProblemFactory
     {
         return TASK;
     }
-
 }
