@@ -12,9 +12,9 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.debug.core,
  org.eclipse.dltk.debug,
  org.eclipse.dltk.validators.core,
- org.scriptkitty.perl-utils;bundle-version="1.0.0",
- org.scriptkitty.ppi4j;bundle-version="1.2.0",
- org.scriptkitty.ppi4j-ast;bundle-version="1.2.0"
+ org.scriptkitty.perl-utils;bundle-version="2.0.0.qualifier",
+ org.scriptkitty.ppi4j;bundle-version="1.2.0.qualifier",
+ org.scriptkitty.ppi4j-ast;bundle-version="1.2.0.qualifier"
 Bundle-ActivationPolicy: lazy
 Export-Package: org.scriptkitty.perlipse.ast,
  org.scriptkitty.perlipse.core,
@@ -31,4 +31,4 @@ Export-Package: org.scriptkitty.perlipse.ast,
  org.scriptkitty.perlipse.internal.parser.ppi4j;x-internal:=true,
  org.scriptkitty.perlipse.launching
 Bundle-Vendor: %plugin.provider
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7

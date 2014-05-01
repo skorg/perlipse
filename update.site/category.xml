@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/org.scriptkitty.perlipse.feature_2.0.0.qualifier.jar" id="org.scriptkitty.perlipse.feature" version="2.0.0.qualifier">
+   <feature url="features/org.scriptkitty.perlipse_2.0.0.qualifier.jar" id="org.scriptkitty.perlipse" version="2.0.0.qualifier">
       <category name="org.scriptkitty.perlipse.released"/>
    </feature>
-   <feature url="features/org.scriptkitty.perlipse.source.feature_2.0.0.qualifier.jar" id="org.scriptkitty.perlipse.source.feature" version="2.0.0.qualifier">
+   <feature url="features/org.scriptkitty.perlipse-2.0.0-qualifier-sources-feature.jar" id="org.scriptkitty.perlipse.source" version="2.0.0.qualifier">
       <category name="org.scriptkitty.perlipse.source"/>
    </feature>
    <category-def name="org.scriptkitty.perlipse.released" label="Released"/>
+   <category-def name="org.scriptkitty.perlipse.deps" label="Dependencies">
+      <description>
+         3rd party dependencies required for perlipse. slf4j is only required if you do not already have an existing implementation installed.
+      </description>
+   </category-def>
    <category-def name="org.scriptkitty.perlipse.source" label="Source"/>
 </site>

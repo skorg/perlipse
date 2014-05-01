@@ -17,7 +17,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.dltk.launching,
  org.eclipse.dltk.core,
  org.eclipse.search,
- org.scriptkitty.perl-utils;bundle-version="1.0.0"
+ org.scriptkitty.perl-utils;bundle-version="2.0.0.qualifier"
 Bundle-ActivationPolicy: lazy
 Export-Package: org.scriptkitty.perlipse.internal.ui;x-internal:=true,
  org.scriptkitty.perlipse.internal.ui.documentation;x-internal:=true,
@@ -32,4 +32,4 @@ Export-Package: org.scriptkitty.perlipse.internal.ui;x-internal:=true,
  org.scriptkitty.perlipse.internal.ui.wizards;x-internal:=true,
  org.scriptkitty.perlipse.ui
 Bundle-Vendor: %plugin.provider
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7

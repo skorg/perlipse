@@ -21,7 +21,7 @@ Require-Bundle: org.eclipse.ui,
  org.scriptkitty.perlipse.ui
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %plugin.provider
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: org.scriptkitty.perlipse.internal.debug.ui;x-internal:=true,
  org.scriptkitty.perlipse.internal.debug.ui.handlers;x-internal:=true,
  org.scriptkitty.perlipse.internal.debug.ui.interpreters;x-internal:=true,

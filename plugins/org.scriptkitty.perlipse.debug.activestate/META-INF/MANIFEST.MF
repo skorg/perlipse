@@ -15,7 +15,7 @@ Require-Bundle: org.eclipse.ui,
  org.scriptkitty.perlipse.core,
  org.eclipse.debug.core
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-Vendor: %plugin.provider
 Export-Package: org.scriptkitty.perlipse.internal.activestate;x-internal:=true,
  org.scriptkitty.perlipse.internal.activestate.launching;x-internal:=true,
