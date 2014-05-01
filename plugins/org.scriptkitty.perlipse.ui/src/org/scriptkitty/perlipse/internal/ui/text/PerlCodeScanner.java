@@ -1,20 +1,17 @@
 package org.scriptkitty.perlipse.internal.ui.text;
 
-import org.eclipse.dltk.ui.text.AbstractScriptScanner;
-import org.eclipse.dltk.ui.text.IColorManager;
-
-import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.jface.text.rules.IRule;
-import org.eclipse.jface.text.rules.IToken;
-
-
-import org.scriptkitty.perlipse.core.util.PerlWordUtils;
-import org.scriptkitty.perlipse.internal.ui.text.rules.PerlSyntaxRulesFactory;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.eclipse.dltk.ui.text.AbstractScriptScanner;
+import org.eclipse.dltk.ui.text.IColorManager;
+import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.text.rules.IRule;
+import org.eclipse.jface.text.rules.IToken;
+import org.scriptkitty.perl.lang.Language;
+import org.scriptkitty.perlipse.internal.ui.text.rules.PerlSyntaxRulesFactory;
 
 
 /**
@@ -105,10 +102,10 @@ public class PerlCodeScanner extends AbstractScriptScanner
 
     private IRule createBarewordRule()
     {
-        String pkg = PerlWordUtils.getPackageKeyword();
+        String pkg = Language.getPackageKeyword().toString();
         IToken pToken = getToken(PerlColorConstants.PERL_PACKAGE_NAME);
 
-        String sub = PerlWordUtils.getSubKeyword();
+        String sub = Language.getSubKeyword().toString();
         IToken sToken = getToken(PerlColorConstants.PERL_SUB_NAME);
 
         Map<String, IToken> map = new HashMap<String, IToken>(2);

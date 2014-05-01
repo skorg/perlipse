@@ -1,23 +1,22 @@
 package org.scriptkitty.perlipse.internal.ui.text.rules;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Comparator;
+
 import org.eclipse.jface.text.rules.ICharacterScanner;
 import org.eclipse.jface.text.rules.IToken;
 import org.eclipse.jface.text.rules.PatternRule;
 import org.eclipse.jface.text.rules.Token;
-
-import org.scriptkitty.perlipse.core.util.PerlWordUtils;
+import org.scriptkitty.perl.lang.Operators;
 import org.scriptkitty.perlipse.core.util.syntax.PerlOpSyntaxUtils;
-
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Set;
 
 
 /**
  */
 public class PerlQuoteAndRegExpPartitionRule extends PatternRule
 {
-    private static Set<String> KEYWORDS = PerlWordUtils.getQuoteAndRegExpOperators();
+    private static Collection<String> KEYWORDS = Operators.getQuoteAndRegExpOperators();
 
     private StringBuffer buffer = new StringBuffer();
 
@@ -59,7 +58,7 @@ public class PerlQuoteAndRegExpPartitionRule extends PatternRule
          * match against the start of the quote-like operator instead of the starting delimiter so
          * the operator can be considered as part of the partition.
          *
-         * perl supports s  /a/b/ and as a valid syntax *ugh* so it seems easier and more efficent to
+         * perl supports 's  /a/b/' and as a valid syntax *ugh* so it seems easier and more efficent to
          * just consume the whitespace, rather then stepping back, checking for whitespace and then
          * performing a double unread to get the next previous character.
          *
@@ -364,7 +363,7 @@ public class PerlQuoteAndRegExpPartitionRule extends PatternRule
      */
     private static class DecreasingCharArrayLengthComparator<T> implements Comparator<T>
     {
-        public int compare(Object o1, Object o2)
+        @Override public int compare(Object o1, Object o2)
         {
             return ((char[]) o2).length - ((char[]) o1).length;
         }

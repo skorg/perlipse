@@ -1,6 +1,6 @@
 package org.scriptkitty.perlipse.internal.ui.text.rules;
 
-import java.util.Enumeration;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -13,21 +13,22 @@ import org.eclipse.jface.text.rules.IWordDetector;
 import org.eclipse.jface.text.rules.PatternRule;
 import org.eclipse.jface.text.rules.WhitespaceRule;
 import org.eclipse.jface.text.rules.WordRule;
-import org.scriptkitty.perlipse.core.util.PerlWordUtils;
+import org.scriptkitty.perl.lang.Keyword;
+import org.scriptkitty.perl.lang.Language;
+import org.scriptkitty.perl.lang.Symbol;
+
 
 
 /**
  */
 public class PerlSyntaxRulesFactory
 {
-    private static final String RETURN = PerlWordUtils.getReturnKeyword();
-
     public static IRule createArrayKeywordSyntaxRule(IToken token)
     {
         IWordDetector detector = PerlSyntaxDetectorFactory.getArrayVariableKeyworDetector();
-        Enumeration<String> keywords = PerlWordUtils.getArrayKeywords();
+        Collection<Symbol> symbols = Symbol.getArrayBuiltins();
 
-        return createKeywordRule(detector, keywords, token);
+        return createSymbolRule(detector, symbols, token);
     }
 
     public static IRule createArrayVariableSyntaxRule(IToken token)
@@ -41,9 +42,9 @@ public class PerlSyntaxRulesFactory
         Assert.isNotNull(nextTokens);
         
         IWordDetector detector = PerlSyntaxDetectorFactory.getBarewordDetector();
-        Enumeration<String> keywords = PerlWordUtils.getBarewordKeywords();
+        Collection<Keyword> barewords = Keyword.getBarewords();
 
-        ScriptWordRule rule = createKeywordRule(detector, keywords, token);
+        ScriptWordRule rule = createKeywordRule(detector, barewords, token);
 
         Iterator<String> iter = nextTokens.keySet().iterator();
         while (iter.hasNext())
@@ -58,15 +59,15 @@ public class PerlSyntaxRulesFactory
     public static IRule createFileHandleSyntaxRule(IToken token)
     {
         IWordDetector detector = PerlSyntaxDetectorFactory.getFileHandleDetector();
-        Enumeration<String> keywords = PerlWordUtils.getFileHandleKeywords();
+        Collection<Symbol> symbols = Symbol.getFileHandleBuiltins();
 
-        return createKeywordRule(detector, keywords, token);
+        return createSymbolRule(detector, symbols, token);
     }
 
     public static IRule createFunctionSyntaxRule(IToken token)
     {
         IWordDetector detector = PerlSyntaxDetectorFactory.getFunctionDetector();
-        Enumeration<String> keywords = PerlWordUtils.getFunctionKeywords();
+        Collection<Keyword> keywords = Keyword.getFunctions();
 
         return createKeywordRule(detector, keywords, token);
     }
@@ -74,9 +75,9 @@ public class PerlSyntaxRulesFactory
     public static IRule createHashKeywordSyntaxRule(IToken token)
     {
         IWordDetector detector = PerlSyntaxDetectorFactory.getHashVariableDetector();
-        Enumeration<String> keywords = PerlWordUtils.getHashKeywords();
+        Collection<Symbol> symbols = Symbol.getHashBuiltins();
 
-        return createKeywordRule(detector, keywords, token);
+        return createSymbolRule(detector, symbols, token);
     }
 
     public static IRule createHashVariableSyntaxRule(IToken token)
@@ -87,7 +88,7 @@ public class PerlSyntaxRulesFactory
     
     public static IRule createPodTagSyntaxRule(IToken token)
     {
-        String podStart = String.valueOf(PerlWordUtils.getPodStartChar());
+        String podStart = String.valueOf(Language.getPodStartChar());
         // break on EOL and EOF
         PatternRule rule = new PatternRule(podStart, null, token, (char) 0, true, true);
         // make sure we only match pod at the start of the line
@@ -99,7 +100,7 @@ public class PerlSyntaxRulesFactory
     public static IRule createReturnSyntaxRule(IToken token)
     {
         WordRule rule = new WordRule(PerlSyntaxDetectorFactory.getFunctionDetector());
-        rule.addWord(RETURN, token);
+        rule.addWord(Language.getReturnKeyword().toString(), token);
 
         return rule;
     }
@@ -107,9 +108,9 @@ public class PerlSyntaxRulesFactory
     public static IRule createScalarKeywordSyntaxRule(IToken token)
     {
         IWordDetector detector = PerlSyntaxDetectorFactory.getScalarVariableDetector();
-        Enumeration<String> keywords = PerlWordUtils.getScalarKeywords();
+        Collection<Symbol> symbols = Symbol.getScalarBuiltins();
 
-        return createKeywordRule(detector, keywords, token);
+        return createSymbolRule(detector, symbols, token);
     }
 
     public static IRule createScalarVariableSyntaxRule(IToken token)
@@ -122,7 +123,7 @@ public class PerlSyntaxRulesFactory
     {
         IWhitespaceDetector detector = new IWhitespaceDetector()
         {
-            public boolean isWhitespace(char c)
+            @Override public boolean isWhitespace(char c)
             {
                 return Character.isWhitespace(c);
             }
@@ -130,18 +131,28 @@ public class PerlSyntaxRulesFactory
         return new WhitespaceRule(detector);
     }
 
-    private static ScriptWordRule createKeywordRule(IWordDetector detector,
-        Enumeration<String> keywords, IToken token)
+    private static ScriptWordRule createSymbolRule(IWordDetector detector, Collection<Symbol> symbols, IToken token)
     {
         ScriptWordRule rule = new ScriptWordRule(detector);
-        while (keywords.hasMoreElements())
+        
+        for (Symbol symbol : symbols)
         {
-            String keyword = keywords.nextElement();
+            rule.addWord(symbol.toString(), token);
+        }
 
+        return rule;
+    }
+    
+    private static ScriptWordRule createKeywordRule(IWordDetector detector, Collection<Keyword> keywords, IToken token)
+    {
+        ScriptWordRule rule = new ScriptWordRule(detector);
+        
+        for (Keyword keyword : keywords)
+        {
             // skip the return keyword, it's a special case...
-            if (! RETURN.equals(keyword))
+            if (!keyword.isReturnKeyword())
             {
-                rule.addWord(keyword, token);
+                rule.addWord(keyword.toString(), token);
             }
         }
 
