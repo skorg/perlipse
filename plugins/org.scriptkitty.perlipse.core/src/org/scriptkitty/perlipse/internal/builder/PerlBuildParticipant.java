@@ -39,6 +39,7 @@ public class PerlBuildParticipant implements IBuildParticipant
         {
             if (!output.isLocal() || output.isCompilationAborted())
             {
+                // TODO: this needs to be logged in some manner, potentially...
                 continue;
             }
 

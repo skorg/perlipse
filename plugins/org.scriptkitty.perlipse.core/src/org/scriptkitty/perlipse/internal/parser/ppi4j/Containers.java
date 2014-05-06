@@ -3,58 +3,58 @@ package org.scriptkitty.perlipse.internal.parser.ppi4j;
 import org.eclipse.dltk.ast.ASTNode;
 import org.eclipse.dltk.ast.declarations.ModuleDeclaration;
 import org.eclipse.dltk.ast.statements.Block;
-import org.scriptkitty.ppi4j.Statement.Type;
 import org.scriptkitty.perlipse.ast.PerlIncludeStatement;
 import org.scriptkitty.perlipse.ast.PerlLoopStatement;
 import org.scriptkitty.perlipse.ast.PerlPackageDeclaration;
 import org.scriptkitty.perlipse.ast.PerlSubDeclaration;
 import org.scriptkitty.perlipse.ast.PerlTerminatorStatement;
+import org.scriptkitty.ppi4j.Statement.Type;
 
 final class Containers
 {
-    static class BlockContainer extends org.scriptkitty.ppi4j.ast.state.BlockContainer
+    static class BlockContainer extends org.scriptkitty.ppi4j.ast.container.BlockContainer<Block, ASTNode>
     {
         protected BlockContainer(Block block)
         {
             super(block);
         }
 
-        @Override public void add(Object stmt)
+        @Override public void add(ASTNode stmt)
         {
-            ((Block) get()).addStatement((ASTNode) stmt);
+            get().addStatement(stmt);
         }
 
         @Override public void setEnd(int offset)
         {
-            ((Block) get()).setEnd(offset);
+            get().setEnd(offset);
         }
     }
 
-    static class IncludeContainer extends org.scriptkitty.ppi4j.ast.state.IncludeContainer
+    static class IncludeContainer extends org.scriptkitty.ppi4j.ast.container.IncludeContainer<PerlIncludeStatement, Void>
     {
         protected IncludeContainer(PerlIncludeStatement include)
         {
             super(include);
         }
 
-        @Override public void add(Object e)
+        @Override public void add(Void stmt)
         {
             // TODO: implement me when 'use constant { FOO => 1 } is supported
         }
 
         @Override public void setEnd(int offset)
         {
-            ((PerlIncludeStatement) get()).setEnd(offset);
+            get().setEnd(offset);
         }
 
         @Override public void setModuleVersion(String moduleVersion)
         {
-            ((PerlIncludeStatement) get()).setVersion(moduleVersion);
+            get().setVersion(moduleVersion);
         }
 
         @Override public void setType(Type type)
         {
-            PerlIncludeStatement stmt = (PerlIncludeStatement) get();
+            PerlIncludeStatement stmt = get();
             
             if (type == Type.USE)
             {
@@ -71,7 +71,7 @@ final class Containers
         }
     }
 
-    static class LoopContainer extends org.scriptkitty.ppi4j.ast.state.LoopContainer
+    static class LoopContainer extends org.scriptkitty.ppi4j.ast.container.LoopContainer<PerlLoopStatement, Block>
     {
         protected LoopContainer(PerlLoopStatement stmt)
         {
@@ -80,62 +80,62 @@ final class Containers
 
         @Override public void setEnd(int offset)
         {
-            ((PerlLoopStatement) get()).setEnd(offset);
+            get().setEnd(offset);
         }
 
-        @Override protected void addBody(Object stmt)
+        @Override protected void addBody(Block stmt)
         {
-            ((PerlLoopStatement) get()).setBody((Block) stmt);
+            get().setBody(stmt);
         }
 
-        @Override protected void addConditional(Object stmt)
+        @Override protected void addConditional(Block stmt)
         {
-            // TODO: ((PerlLoopStatement) get()).setConditional(????)
+            // TODO: get().setConditional(????)
         }
 
-        @Override protected void addContinue(Object stmt)
+        @Override protected void addContinue(Block stmt)
         {
-            ((PerlLoopStatement) get()).setContinue((Block) stmt);
+            get().setContinue(stmt);
         }
     }
 
-    static class ModuleContainer extends org.scriptkitty.ppi4j.ast.state.ModuleContainer
+    static class ModuleContainer extends org.scriptkitty.ppi4j.ast.container.ModuleContainer<ModuleDeclaration, PerlPackageDeclaration>
     {
         protected ModuleContainer(ModuleDeclaration declaration)
         {
             super(declaration);
         }
 
-        @Override public void add(Object stmt)
+        @Override public void add(PerlPackageDeclaration stmt)
         {
-            ((ModuleDeclaration) get()).addStatement((ASTNode) stmt);
+            get().addStatement(stmt);
         }
     }
 
-    static class PackageContainer extends org.scriptkitty.ppi4j.ast.state.PackageContainer
+    static class PackageContainer extends org.scriptkitty.ppi4j.ast.container.PackageContainer<PerlPackageDeclaration, ASTNode>
     {
         protected PackageContainer(PerlPackageDeclaration pkg)
         {
             super(pkg);
         }
 
-        @Override public void add(Object stmt)
+        @Override public void add(ASTNode stmt)
         {
-            ((PerlPackageDeclaration) get()).addStatement((ASTNode) stmt);
+            get().addStatement(stmt);
         }
 
         @Override public String getPackageName()
         {
-            return ((PerlPackageDeclaration) get()).getName();
+            return get().getName();
         }
 
         @Override public void setEnd(int offset)
         {
-            ((PerlPackageDeclaration) get()).setEnd(offset);
+            get().setEnd(offset);
         }
     }
 
-    static class StatementContainer extends org.scriptkitty.ppi4j.ast.state.StatementContainer
+    static class StatementContainer extends org.scriptkitty.ppi4j.ast.container.StatementContainer<ASTNode, Void>
     {
         protected StatementContainer(ASTNode stmt)
         {
@@ -144,34 +144,34 @@ final class Containers
 
         @Override public void setEnd(int offset)
         {
-            ((ASTNode) get()).setEnd(offset);
+            get().setEnd(offset);
         }
     }
 
-    static class SubContainer extends org.scriptkitty.ppi4j.ast.state.SubContainer
+    static class SubContainer extends org.scriptkitty.ppi4j.ast.container.SubContainer<PerlSubDeclaration, Block>
     {
         protected SubContainer(PerlSubDeclaration subroutine)
         {
             super(subroutine);
         }
 
-        @Override public void add(Object stmt)
+        @Override public void add(Block stmt)
         {
-            ((PerlSubDeclaration) get()).acceptBody((Block) stmt);
+            get().acceptBody(stmt);
         }
 
         @Override public void setDeclaringPackage(String pkgName)
         {
-            ((PerlSubDeclaration) get()).setDeclaringTypeName(pkgName);
+            get().setDeclaringTypeName(pkgName);
         }
 
         @Override public void setEnd(int offset)
         {
-            ((PerlSubDeclaration) get()).setEnd(offset);
+            get().setEnd(offset);
         }
     }
 
-    static class TerminatorContainer extends org.scriptkitty.ppi4j.ast.state.TerminatorContainer
+    static class TerminatorContainer extends org.scriptkitty.ppi4j.ast.container.TerminatorContainer<PerlTerminatorStatement, Void>
     {
         protected TerminatorContainer(PerlTerminatorStatement terminator)
         {
@@ -180,7 +180,7 @@ final class Containers
 
         @Override public void setEnd(int offset)
         {
-            ((ASTNode) get()).setEnd(offset);
+            get().setEnd(offset);
         }
     }
 }

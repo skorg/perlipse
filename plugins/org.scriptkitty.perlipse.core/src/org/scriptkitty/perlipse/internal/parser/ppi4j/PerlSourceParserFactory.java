@@ -7,17 +7,16 @@ import org.eclipse.dltk.ast.parser.ISourceParser;
 import org.eclipse.dltk.ast.parser.ISourceParserFactory;
 import org.eclipse.dltk.compiler.env.IModuleSource;
 import org.eclipse.dltk.compiler.problem.IProblemReporter;
+import org.scriptkitty.perlipse.internal.core.PerlCorePlugin;
 import org.scriptkitty.ppi4j.Document;
 import org.scriptkitty.ppi4j.Token;
 import org.scriptkitty.ppi4j.ast.ASTBuildVisitor;
-import org.scriptkitty.ppi4j.ast.ASTConverter;
 import org.scriptkitty.ppi4j.exception.ParserException;
 import org.scriptkitty.ppi4j.exception.TokenizerException;
 import org.scriptkitty.ppi4j.parser.DefaultTokenProvider;
 import org.scriptkitty.ppi4j.parser.Parser;
 import org.scriptkitty.ppi4j.parser.ParserFactory;
 import org.scriptkitty.ppi4j.util.IErrorProxy;
-import org.scriptkitty.perlipse.internal.core.PerlCorePlugin;
 
 
 public class PerlSourceParserFactory implements ISourceParserFactory
@@ -67,9 +66,7 @@ public class PerlSourceParserFactory implements ISourceParserFactory
             ModuleDeclaration module = new ModuleDeclaration(source.length());
 
             IErrorProxy proxy = new ProblemReporterProxy(reporter);
-            ASTConverter converter = new ASTConverter(new PerlASTObjectCreator(module));
-            
-            ASTBuildVisitor visitor = new ASTBuildVisitor(converter, proxy);
+            ASTBuildVisitor visitor = new ASTBuildVisitor(new PerlASTObjectCreator(module), proxy);
 
             DefaultTokenProvider provider = new DefaultTokenProvider(source);
             Parser parser = ParserFactory.createParser(provider, new ProblemReporterProxy(reporter));
